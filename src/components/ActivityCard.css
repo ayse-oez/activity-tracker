@@ -1,0 +1,23 @@
+.activityCard {
+  padding: 16px;
+  border-bottom: 1px solid #e5e5ea;
+  background-color: #ffffff;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.type,
+.duration {
+  font-size: 14px;
+  color: #8e8e93;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 500;
+  color: #000000;
+}
