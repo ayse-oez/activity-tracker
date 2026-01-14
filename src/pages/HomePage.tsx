@@ -1,6 +1,7 @@
 import './HomePage.css';
 import ActivityCard from '../components/ActivityCard';
 import { useState } from 'react';
+import BottomSheet from './BottomSheet';
 
 const HomePage = () => {
   const [isBottomSheetOpen, setIsBottomSheetopen] = useState(false);
@@ -26,14 +27,10 @@ const HomePage = () => {
 
       {isBottomSheetOpen && (
         <div className="bottomSheetOverlay">
-          <div className="bottomSheet">
-            <div className="bottomSheetHandle" />
-
-            <h2 className="title">New Activity</h2>
-            <p className="title"> baldiges formular hierhin </p>
-
-            <button onClick={() => setIsBottomSheetopen(false)}>Close</button>
-          </div>
+          <BottomSheet
+            isOpen={isBottomSheetOpen}
+            onClose={() => setIsBottomSheetopen(false)}
+          />
         </div>
       )}
     </div>

@@ -5,7 +5,8 @@ const App = () => {
   return (
     <div className="app">
       <header className="appHeader">Activity Tracker</header>
-      <main>
+
+      <main className="appContent">
         <HomePage />
       </main>
     </div>

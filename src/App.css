@@ -8,12 +8,12 @@
 }
 
 .appHeader {
-  padding: 16px;
+  padding: var (--appPadding);
   font-weight: 600;
   border-bottom: 1px solid #eee;
 }
 
 .appContent {
   flex: 1;
-  padding: 16px;
+  padding: var (--appPadding);
 }
