@@ -3,6 +3,7 @@ import ActivityCard from '../components/ActivityCard';
 import { useState } from 'react';
 import BottomSheet from './BottomSheet';
 import type { MediaEntry } from '../types/media';
+import EmptyState from '../components/EmptyState';
 
 const HomePage = () => {
   const [entries, setEntries] = useState<MediaEntry[]>([]);
@@ -21,14 +22,18 @@ const HomePage = () => {
       <h1 className="title">Today</h1>
 
       <div className="entries">
-        {entries.map((entry) => (
-          <ActivityCard
-            key={entry.id}
-            type={entry.type}
-            title={entry.name}
-            duration={entry.time}
-          />
-        ))}
+        {entries.length === 0 ? (
+          <EmptyState />
+        ) : (
+          entries.map((entry) => (
+            <ActivityCard
+              key={entry.id}
+              type={entry.type}
+              title={entry.name}
+              duration={entry.time}
+            />
+          ))
+        )}
       </div>
 
       <button className="addButton" onClick={handleAddActivityClick}>
