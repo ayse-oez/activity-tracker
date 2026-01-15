@@ -2,24 +2,34 @@ import './HomePage.css';
 import ActivityCard from '../components/ActivityCard';
 import { useState } from 'react';
 import BottomSheet from './BottomSheet';
+import type { MediaEntry } from '../types/media';
 
 const HomePage = () => {
+  const [entries, setEntries] = useState<MediaEntry[]>([]);
   const [isBottomSheetOpen, setIsBottomSheetopen] = useState(false);
+
   const handleAddActivityClick = () => {
     setIsBottomSheetopen(true);
+  };
+
+  const handleSaveEntry = (entry: MediaEntry) => {
+    setEntries((prevEntries) => [...prevEntries, entry]);
   };
 
   return (
     <div className="home">
       <h1 className="title">Today</h1>
 
-      <ActivityCard
-        type="Book"
-        title="Yumi and the Nightmare Painter"
-        duration="30 min"
-      />
-
-      <ActivityCard type="Movie" title="Little Women" duration="135 min" />
+      <div className="entries">
+        {entries.map((entry) => (
+          <ActivityCard
+            key={entry.id}
+            type={entry.type}
+            title={entry.name}
+            duration={entry.time}
+          />
+        ))}
+      </div>
 
       <button className="addButton" onClick={handleAddActivityClick}>
         + activity
@@ -30,6 +40,7 @@ const HomePage = () => {
           <BottomSheet
             isOpen={isBottomSheetOpen}
             onClose={() => setIsBottomSheetopen(false)}
+            onSave={handleSaveEntry}
           />
         </div>
       )}
