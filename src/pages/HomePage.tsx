@@ -1,9 +1,11 @@
 import './HomePage.css';
-import ActivityCard from '../components/ActivityCard';
+
 import { useState } from 'react';
-import BottomSheet from './BottomSheet';
+
+import ActivityCard from '../components/ActivityCard';
 import EmptyState from '../components/EmptyState';
 import { useEntries } from '../hooks/useEntries';
+import BottomSheet from './BottomSheet';
 
 const HomePage = () => {
   const { entries, addEntry } = useEntries();

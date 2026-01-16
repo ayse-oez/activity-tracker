@@ -1,5 +1,6 @@
-import { MediaTypeLabels, type MediaEntry } from '../types/media';
 import './ActivityCard.css';
+
+import { type MediaEntry, MediaTypeLabels } from '../types/media';
 
 type ActivityCardProps = {
   entry: MediaEntry;

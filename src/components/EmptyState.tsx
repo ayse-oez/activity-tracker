@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import './EmptyState.css';
+
+import { useState } from 'react';
 
 const messages = [
   'Did you do something fun today? Track it now!',

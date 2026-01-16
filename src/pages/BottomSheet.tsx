@@ -1,6 +1,8 @@
-import { useState, type ChangeEvent, type MouseEvent } from 'react';
 import './BottomSheet.css';
-import type { MediaType, MediaEntry } from '../types/media';
+
+import { type ChangeEvent, type MouseEvent, useState } from 'react';
+
+import type { MediaEntry, MediaType } from '../types/media';
 
 type Props = {
   isOpen: boolean;

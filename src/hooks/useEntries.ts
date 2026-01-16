@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+
 import type { MediaEntry } from '../types/media';
 
 const STORAGE_KEY = 'entries';
