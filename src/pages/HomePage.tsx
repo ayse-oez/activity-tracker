@@ -1,35 +1,17 @@
 import './HomePage.css';
 import ActivityCard from '../components/ActivityCard';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import BottomSheet from './BottomSheet';
-import type { MediaEntry } from '../types/media';
 import EmptyState from '../components/EmptyState';
+import { useEntries } from '../hooks/useEntries';
 
 const HomePage = () => {
-  const [entries, setEntries] = useState<MediaEntry[]>(() => {
-    const storedEntries = localStorage.getItem('entries');
-    return storedEntries ? JSON.parse(storedEntries) : [];
-  });
-
-  const isInitialRender = useRef(true);
-
-  useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-      return;
-    }
-
-    localStorage.setItem('entries', JSON.stringify(entries));
-  }, [entries]);
+  const { entries, addEntry } = useEntries();
 
   const [isBottomSheetOpen, setIsBottomSheetopen] = useState(false);
 
   const handleAddActivityClick = () => {
     setIsBottomSheetopen(true);
-  };
-
-  const handleSaveEntry = (entry: MediaEntry) => {
-    setEntries((prevEntries) => [...prevEntries, entry]);
   };
 
   return (
@@ -60,7 +42,7 @@ const HomePage = () => {
           <BottomSheet
             isOpen={isBottomSheetOpen}
             onClose={() => setIsBottomSheetopen(false)}
-            onSave={handleSaveEntry}
+            onSave={addEntry}
           />
         </div>
       )}
