@@ -1,12 +1,27 @@
 import './HomePage.css';
 import ActivityCard from '../components/ActivityCard';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BottomSheet from './BottomSheet';
 import type { MediaEntry } from '../types/media';
 import EmptyState from '../components/EmptyState';
 
 const HomePage = () => {
-  const [entries, setEntries] = useState<MediaEntry[]>([]);
+  const [entries, setEntries] = useState<MediaEntry[]>(() => {
+    const storedEntries = localStorage.getItem('entries');
+    return storedEntries ? JSON.parse(storedEntries) : [];
+  });
+
+  const isInitialRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+
+    localStorage.setItem('entries', JSON.stringify(entries));
+  }, [entries]);
+
   const [isBottomSheetOpen, setIsBottomSheetopen] = useState(false);
 
   const handleAddActivityClick = () => {
