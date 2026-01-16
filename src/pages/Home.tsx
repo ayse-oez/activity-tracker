@@ -1,15 +1,18 @@
-import './HomePage.css';
+import './Home.css';
 
 import { useState } from 'react';
 
 import ActivityCard from '../components/ActivityCard';
 import EmptyState from '../components/EmptyState';
-import { useEntries } from '../hooks/useEntries';
+import type { MediaEntry } from '../types/media';
 import BottomSheet from './BottomSheet';
 
-const HomePage = () => {
-  const { entries, addEntry } = useEntries();
+type Props = {
+  entries: MediaEntry[];
+  onSaveEntry: (entry: Omit<MediaEntry, 'id' | 'createdAt'>) => void;
+};
 
+const Home = ({ entries, onSaveEntry }: Props) => {
   const [isBottomSheetOpen, setIsBottomSheetopen] = useState(false);
 
   const handleAddActivityClick = () => {
@@ -37,7 +40,7 @@ const HomePage = () => {
           <BottomSheet
             isOpen={isBottomSheetOpen}
             onClose={() => setIsBottomSheetopen(false)}
-            onSave={addEntry}
+            onSave={onSaveEntry}
           />
         </div>
       )}
@@ -45,4 +48,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
