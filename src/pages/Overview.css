@@ -1,0 +1,54 @@
+.overview {
+  padding: var(--space-md);
+  min-height: 100vh;
+}
+
+.overviewTitle {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
+}
+
+/* Section (iOS grouped style) */
+.overviewSection {
+  margin-bottom: var(--space-lg);
+}
+
+/* Card */
+.overviewCard {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-card);
+}
+
+/* Card title */
+.overviewCardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-secondary-text);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Main stat number */
+.overviewStat {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Small description under stat */
+.overviewStatLabel {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--color-secondary-text);
+}
+
+/* List style (reuse ActivityCard later) */
+.overviewList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}

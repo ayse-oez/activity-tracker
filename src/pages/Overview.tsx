@@ -16,9 +16,9 @@ const Overview = ({ entries }: Props) => {
 
   return (
     <section className="overview">
-      <h2>Overview</h2>
+      <h1 className="overviewTitle">Overview</h1>
 
-      <div className="entries">
+      <div className="overviewCard">
         {sortedEntries.map((entry) => (
           <ActivityCard key={entry.id} entry={entry} />
         ))}
