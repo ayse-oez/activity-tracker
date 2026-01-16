@@ -5,7 +5,7 @@ import type { MediaType, MediaEntry } from '../types/media';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (entry: MediaEntry) => void;
+  onSave: (entry: Omit<MediaEntry, 'id' | 'createdAt'>) => void;
 };
 
 const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
@@ -20,15 +20,7 @@ const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
   }
 
   const handleSave = () => {
-    const newEntry: MediaEntry = {
-      id: Date.now(),
-      type,
-      name,
-      time: Number(time),
-      date: new Date().toISOString(), //today
-    };
-
-    onSave(newEntry);
+    onSave({ type, name, durationMinutes: Number(time) });
     onClose();
 
     setType('movie');

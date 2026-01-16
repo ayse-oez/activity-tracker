@@ -22,14 +22,7 @@ const HomePage = () => {
         {entries.length === 0 ? (
           <EmptyState />
         ) : (
-          entries.map((entry) => (
-            <ActivityCard
-              key={entry.id}
-              type={entry.type}
-              title={entry.name}
-              duration={entry.time}
-            />
-          ))
+          entries.map((entry) => <ActivityCard key={entry.id} entry={entry} />)
         )}
       </div>
 

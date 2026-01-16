@@ -20,8 +20,15 @@ export const useEntries = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
   }, [entries]);
 
-  const addEntry = (entry: MediaEntry) => {
-    setEntries((prev) => [...prev, entry]);
+  const addEntry = (entry: Omit<MediaEntry, 'id' | 'createdAt'>) => {
+    setEntries((prev) => [
+      ...prev,
+      {
+        ...entry,
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+      },
+    ]);
   };
 
   return { entries, addEntry };
