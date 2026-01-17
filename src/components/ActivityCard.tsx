@@ -15,7 +15,7 @@ const ActivityCard = ({ entry }: ActivityCardProps) => {
         <span className="type">{MediaTypeLabels[type]}</span>
         <span className="duration">{durationMinutes} min</span>
       </div>
-      <div className="title">{name}</div>
+      <div className="activityTitle">{name}</div>
     </div>
   );
 };

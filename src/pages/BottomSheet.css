@@ -1,3 +1,13 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+
+  display: flex;
+  align-items: flex-end;
+}
+
 .bottomSheet {
   position: absolute;
   left: 0;
@@ -6,27 +16,21 @@
 
   background: white;
   min-height: 40vh;
-  max-height: 80vh;
 
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-
-  box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.12);
-
-  display: flex;
-  flex-direction: column;
+  padding: var(--space-md);
+  box-shadow: var(--shadow-card);
 }
 
-/* 👆 kleiner "Grab Handle" */
 .bottomSheetHandle {
   width: 36px;
   height: 5px;
-  background: #d1d1d6;
+  background: #c7c7cc;
   border-radius: 3px;
   margin: 8px auto 12px;
 }
 
-/* 📦 Content */
 .bottomSheetContent {
   padding: 16px;
   display: flex;
@@ -34,18 +38,16 @@
   gap: 16px;
 }
 
-/* 🏷 Labels */
 .bottomSheetContent label {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: #3a3a3c;
 }
 
-/* ✏️ Inputs & Select */
 .bottomSheetContent input,
 .bottomSheetContent select {
   width: 100%;
@@ -57,7 +59,6 @@
 
   background: #f9f9f9;
   color: #000;
-
   outline: none;
 }
 
@@ -67,34 +68,20 @@
   background: #fff;
 }
 
-/* 🔲 Overlay */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
-
-  display: flex;
-  align-items: flex-end;
-}
-
-/* 🔽 Footer */
 .footer {
   padding: 16px;
   border-top: 1px solid #e5e5ea;
 }
 
-/* 💾 Save Button */
 .saveButton {
   width: 100%;
   padding: 14px;
 
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
 
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
 
   background: #007aff;
   color: white;

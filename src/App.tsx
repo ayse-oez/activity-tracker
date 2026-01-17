@@ -2,39 +2,40 @@ import './App.css';
 
 import { useState } from 'react';
 
+import FloatingActionButton from './components/FloatingActionButton';
+import TabBar from './components/TabBar';
 import { useEntries } from './hooks/useEntries';
+import BottomSheet from './pages/BottomSheet';
 import Home from './pages/Home';
 import Overview from './pages/Overview';
 
-type Page = 'home' | 'overview';
+type Tab = 'home' | 'overview';
 
 const App = () => {
   const { entries, addEntry } = useEntries();
-  const [page, setPage] = useState<Page>('home');
+  const [activeTab, setActiveTab] = useState<Tab>('home');
+  const [isBottomSheetOpen, setIsBottomSheetopen] = useState(false);
 
   return (
     <div className="app">
       <header className="appHeader">Activity Tracker</header>
 
-      <nav className="tabBar">
-        <button
-          className={page === 'home' ? 'active' : ''}
-          onClick={() => setPage('home')}
-        >
-          Home
-        </button>
-        <button
-          className={page === 'overview' ? 'active' : ''}
-          onClick={() => setPage('overview')}
-        >
-          Overview
-        </button>
-      </nav>
-
       <main className="appContent">
-        {page === 'home' && <Home entries={entries} onSaveEntry={addEntry} />}
-        {page === 'overview' && <Overview entries={entries} />}
+        {activeTab === 'home' && <Home entries={entries} />}
+        {activeTab === 'overview' && <Overview entries={entries} />}
       </main>
+
+      <FloatingActionButton onClick={() => setIsBottomSheetopen(true)} />
+
+      <TabBar activeTab={activeTab} onChange={setActiveTab} />
+
+      {isBottomSheetOpen && (
+        <BottomSheet
+          isOpen
+          onClose={() => setIsBottomSheetopen(false)}
+          onSave={addEntry}
+        />
+      )}
     </div>
   );
 };

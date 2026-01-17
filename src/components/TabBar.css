@@ -1,0 +1,31 @@
+.tabBar {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  gap: 8px;
+  padding: 8px;
+
+  height: 56px;
+  background: #ffffff;
+
+  border-top: 1px solid #e5e5ea;
+}
+
+.tabBar button {
+  flex: 1;
+  align-items: center;
+  font-size: 20px;
+
+  border: none;
+  background: none;
+
+  color: #8e8e93;
+  cursor: pointer;
+}
+
+.tabBar button.active {
+  color: #007aff;
+  font-weight: 600;
+}

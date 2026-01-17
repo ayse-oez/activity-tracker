@@ -1,3 +1,5 @@
+import './Overview.css';
+
 import ActivityCard from '../components/ActivityCard';
 import type { MediaEntry } from '../types/media';
 
@@ -15,15 +17,15 @@ const Overview = ({ entries }: Props) => {
   );
 
   return (
-    <section className="overview">
-      <h1 className="overviewTitle">Overview</h1>
+    <div className="overview">
+      <h1 className="title">Overview</h1>
 
-      <div className="overviewCard">
+      <div>
         {sortedEntries.map((entry) => (
           <ActivityCard key={entry.id} entry={entry} />
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

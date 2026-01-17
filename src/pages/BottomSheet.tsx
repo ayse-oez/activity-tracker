@@ -53,6 +53,7 @@ const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
   return (
     <div className="overlay" onClick={handleOverlayClick}>
       <div className="bottomSheet">
+        <div className="bottomSheetHandle" />
         <div className="bottomSheetContent">
           <label>
             Type

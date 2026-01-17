@@ -1,0 +1,13 @@
+.fab {
+  border-radius: 50%;
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #007aff;
+  color: white;
+
+  font-size: 28px;
+  z-index: auto;
+}

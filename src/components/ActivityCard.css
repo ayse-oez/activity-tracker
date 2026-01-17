@@ -12,12 +12,12 @@
 
 .type,
 .duration {
-  font-size: 14px;
+  font-size: 16px;
   color: #8e8e93;
 }
 
-.title {
-  font-size: 17px;
+.activityTitle {
+  font-size: 24px;
   font-weight: 500;
   color: #000000;
 }

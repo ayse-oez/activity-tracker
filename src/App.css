@@ -9,7 +9,7 @@
 .appHeader {
   display: flex;
   justify-content: center;
-  padding: var(--appPadding);
+  padding: var(--space-md);
   font-weight: 600;
   border-bottom: 1px solid #eee;
   font-size: 32px;
@@ -17,25 +17,6 @@
 
 .appContent {
   flex: 1;
-  padding: var(--appPadding);
-}
-
-.tabBar {
-  display: flex;
-  gap: 8px;
-  padding: 8px;
-}
-
-.tabBar button {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  background: #eee;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.tabBar button.active {
-  background: #222;
-  color: white;
+  padding: var(--space-md);
+  /* padding-bottom: 56px;  space for tabbar*/
 }
