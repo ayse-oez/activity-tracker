@@ -21,13 +21,17 @@ export const useEntries = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
   }, [entries]);
 
-  const addEntry = (entry: Omit<MediaEntry, 'id' | 'createdAt'>) => {
+  const addEntry = (
+    entry: Omit<MediaEntry, 'id' | 'createdAt'> & { date?: string }
+  ) => {
     setEntries((prev) => [
       ...prev,
       {
         ...entry,
         id: crypto.randomUUID(),
-        createdAt: new Date().toISOString(),
+        createdAt: entry.date
+          ? new Date(entry.date).toISOString()
+          : new Date().toISOString(),
       },
     ]);
   };

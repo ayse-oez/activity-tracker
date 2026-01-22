@@ -1,5 +1,6 @@
 .app {
   height: 100vh;
+  /* height entfernen, damit der background unten gefixed wird, wenn man scrollt */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -18,5 +19,5 @@
 .appContent {
   flex: 1;
   padding: var(--space-md);
-  /* padding-bottom: 56px;  space for tabbar*/
+  /* overflow: hidden; */
 }

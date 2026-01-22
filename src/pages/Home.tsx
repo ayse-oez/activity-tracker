@@ -10,7 +10,9 @@ type Props = {
 };
 
 const Home = ({ entries }: Props) => {
-  const todaysEntries = entries.filter((entry) => isToday(entry.createdAt));
+  const todaysEntries = entries.filter((entry) =>
+    isToday(new Date(entry.createdAt))
+  );
 
   return (
     <div className="home">
@@ -20,7 +22,9 @@ const Home = ({ entries }: Props) => {
         {todaysEntries.length === 0 ? (
           <EmptyState />
         ) : (
-          entries.map((entry) => <ActivityCard key={entry.id} entry={entry} />)
+          todaysEntries.map((entry) => (
+            <ActivityCard key={entry.id} entry={entry} />
+          ))
         )}
       </div>
     </div>

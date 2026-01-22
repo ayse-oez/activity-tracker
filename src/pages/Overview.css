@@ -1,9 +1,32 @@
 .overview {
   padding: var(--space-md);
-  min-height: 100vh;
 }
 
 .title {
   font-size: 32px;
   margin-bottom: var(--space-lg);
+}
+
+.dayTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.dayGroup {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.divider {
+  border-top: 1px solid #bbb;
+}
+
+.mediaFilter {
+  height: 25px;
+}
+
+.mediaFilter button.active {
+  font-weight: 600;
 }
