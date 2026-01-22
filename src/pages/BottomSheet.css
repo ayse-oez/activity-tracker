@@ -93,3 +93,8 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.sheetTitle {
+  display: flex;
+  justify-content: center;
+}

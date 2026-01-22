@@ -10,15 +10,22 @@ type Props = {
   onSave: (
     entry: Omit<MediaEntry, 'id' | 'createdAt'> & { date?: string }
   ) => void;
+  entryToEdit?: MediaEntry | null;
 };
 
-const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
+const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
   const mediaTypes: MediaType[] = ['book', 'movie', 'series', 'game'];
 
-  const [type, setType] = useState<MediaType>('movie');
-  const [name, setName] = useState('');
-  const [time, setTime] = useState('');
-  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const today = new Date().toISOString().slice(0, 10);
+
+  const [type, setType] = useState<MediaType>(entryToEdit?.type ?? 'movie');
+  const [name, setName] = useState(entryToEdit?.name ?? '');
+  const [time, setTime] = useState(
+    entryToEdit ? String(entryToEdit.durationMinutes) : ''
+  );
+  const [date, setDate] = useState(
+    entryToEdit ? entryToEdit?.createdAt?.slice(0, 10) : today
+  );
 
   if (!isOpen) {
     return null;
@@ -28,10 +35,12 @@ const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
     onSave({ type, name, durationMinutes: Number(time), date });
     onClose();
 
-    setType('movie');
-    setName('');
-    setTime('');
-    setDate(new Date().toISOString().slice(0, 10));
+    if (!entryToEdit) {
+      setType('movie');
+      setName('');
+      setTime('');
+      setDate(new Date().toISOString().slice(0, 10));
+    }
   };
 
   const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -53,7 +62,7 @@ const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
   };
 
   const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDate(event?.target.value);
+    setDate(event.target.value);
   };
 
   const isSaveDisabled = name.trim() === '' || time === '' || Number(time) <= 0;
@@ -62,6 +71,10 @@ const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
     <div className="overlay" onClick={handleOverlayClick}>
       <div className="bottomSheet">
         <div className="bottomSheetHandle" />
+        <div className="sheetTitle">
+          {entryToEdit ? 'Edit Activity' : 'Add Activity'}
+        </div>
+
         <div className="bottomSheetContent">
           <label>
             Type
@@ -86,7 +99,7 @@ const BottomSheet = ({ isOpen, onClose, onSave }: Props) => {
 
           <label>
             Date
-            <input type="date" value={date} onChange={handleDateChange} />
+            <input type="date" value={date ?? ''} onChange={handleDateChange} />
           </label>
         </div>
 

@@ -12,9 +12,10 @@ import { getDateLabel } from '../utils/date';
 
 type Props = {
   entries: MediaEntry[];
+  onEdit: (entry: MediaEntry) => void;
 };
 
-const Overview = ({ entries }: Props) => {
+const Overview = ({ entries, onEdit }: Props) => {
   const [selectedType, setSelectedType] = useState<MediaType | 'all'>('all');
 
   const groupEntriesByDate = (entries: MediaEntry[]) => {
@@ -82,7 +83,11 @@ const Overview = ({ entries }: Props) => {
             <div className="divider" />
 
             {groupedEntries[dateKey].map((entry) => (
-              <ActivityCard key={entry.id} entry={entry} />
+              <ActivityCard
+                key={entry.id}
+                entry={entry}
+                onEdit={() => onEdit(entry)}
+              />
             ))}
           </div>
         ))}

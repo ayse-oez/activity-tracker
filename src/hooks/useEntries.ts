@@ -36,5 +36,16 @@ export const useEntries = () => {
     ]);
   };
 
-  return { entries, addEntry };
+  const updateEntry = (
+    id: string,
+    updatedEntry: Partial<Omit<MediaEntry, 'id'>>
+  ) => {
+    setEntries((prev) =>
+      prev.map((entry) =>
+        entry.id === id ? { ...entry, ...updatedEntry } : entry
+      )
+    );
+  };
+
+  return { entries, addEntry, updateEntry };
 };

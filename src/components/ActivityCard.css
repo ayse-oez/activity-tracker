@@ -21,3 +21,9 @@
   font-weight: 500;
   color: #000000;
 }
+
+.editButton {
+  display: flex;
+  justify-content: end;
+  padding: 4px 0;
+}

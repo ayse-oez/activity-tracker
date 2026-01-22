@@ -7,9 +7,10 @@ import { isToday } from '../utils/date';
 
 type Props = {
   entries: MediaEntry[];
+  onEdit: (entry: MediaEntry) => void;
 };
 
-const Home = ({ entries }: Props) => {
+const Home = ({ entries, onEdit }: Props) => {
   const todaysEntries = entries.filter((entry) =>
     isToday(new Date(entry.createdAt))
   );
@@ -23,7 +24,11 @@ const Home = ({ entries }: Props) => {
           <EmptyState />
         ) : (
           todaysEntries.map((entry) => (
-            <ActivityCard key={entry.id} entry={entry} />
+            <ActivityCard
+              key={entry.id}
+              entry={entry}
+              onEdit={() => onEdit(entry)}
+            />
           ))
         )}
       </div>
