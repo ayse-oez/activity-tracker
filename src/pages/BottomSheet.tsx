@@ -8,7 +8,8 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onSave: (
-    entry: Omit<MediaEntry, 'id' | 'createdAt'> & { date?: string }
+    entry: Omit<MediaEntry, 'id' | 'createdAt'> & { date?: string },
+    entryId?: string
   ) => void;
   entryToEdit?: MediaEntry | null;
 };
@@ -32,14 +33,18 @@ const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
   }
 
   const handleSave = () => {
-    onSave({ type, name, durationMinutes: Number(time), date });
+    onSave(
+      { type, name, durationMinutes: Number(time), date },
+      entryToEdit?.id
+    );
+
     onClose();
 
     if (!entryToEdit) {
       setType('movie');
       setName('');
       setTime('');
-      setDate(new Date().toISOString().slice(0, 10));
+      setDate(today);
     }
   };
 

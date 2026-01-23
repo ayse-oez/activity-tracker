@@ -13,10 +13,26 @@ import type { MediaEntry } from './types/media';
 type Tab = 'home' | 'overview';
 
 const App = () => {
-  const { entries, addEntry } = useEntries();
+  const { entries, addEntry, updateEntry } = useEntries();
   const [activeTab, setActiveTab] = useState<Tab>('home');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [entryToEdit, setEntryToEdit] = useState<MediaEntry | null>(null);
+
+  const handleSaveEntry = (
+    entry: Omit<MediaEntry, 'id' | 'createdAt'> & { date?: string },
+    entryId?: string
+  ) => {
+    if (entryId) {
+      updateEntry(entryId, {
+        ...entry,
+        createdAt: entry.date ? new Date(entry.date).toISOString() : undefined,
+      });
+    } else {
+      addEntry(entry);
+    }
+
+    setEntryToEdit(null);
+  };
 
   const openAddSheet = () => {
     setEntryToEdit(null);
@@ -49,7 +65,7 @@ const App = () => {
         <BottomSheet
           isOpen={isBottomSheetOpen}
           onClose={() => setIsBottomSheetOpen(false)}
-          onSave={addEntry}
+          onSave={handleSaveEntry}
           entryToEdit={entryToEdit}
         />
       )}
