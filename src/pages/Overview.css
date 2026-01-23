@@ -22,11 +22,3 @@
 .divider {
   border-top: 1px solid #bbb;
 }
-
-.mediaFilter {
-  height: 25px;
-}
-
-.mediaFilter button.active {
-  font-weight: 600;
-}

@@ -3,11 +3,8 @@ import './Overview.css';
 import { useState } from 'react';
 
 import ActivityCard from '../components/ActivityCard';
-import {
-  type MediaEntry,
-  type MediaType,
-  MediaTypeLabels,
-} from '../types/media';
+import MediaFilter from '../components/MediaFilter';
+import { type MediaEntry, type MediaType } from '../types/media';
 import { getDateLabel } from '../utils/date';
 
 type Props = {
@@ -52,28 +49,11 @@ const Overview = ({ entries, onEdit }: Props) => {
     <div className="overview">
       <h1 className="title">Overview</h1>
 
-      <div className="mediaFilter">
-        <button
-          className={selectedType === 'all' ? 'active' : ''}
-          onClick={() => setSelectedType('all')}
-        >
-          All ({entries.length})
-        </button>
-
-        {Object.entries(MediaTypeLabels).map(([type, label]) => {
-          const count = entries.filter((e) => e.type === type).length;
-
-          return (
-            <button
-              key={type}
-              className={selectedType === type ? 'active' : ''}
-              onClick={() => setSelectedType(type as MediaType)}
-            >
-              {label} ({count})
-            </button>
-          );
-        })}
-      </div>
+      <MediaFilter
+        entries={entries}
+        selectedType={selectedType}
+        onChange={setSelectedType}
+      />
 
       <div>
         {sortedDates.map((dateKey) => (
