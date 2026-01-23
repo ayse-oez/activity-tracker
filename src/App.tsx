@@ -63,6 +63,7 @@ const App = () => {
 
       {isBottomSheetOpen && (
         <BottomSheet
+          key={entryToEdit?.id ?? 'new'}
           isOpen={isBottomSheetOpen}
           onClose={() => setIsBottomSheetOpen(false)}
           onSave={handleSaveEntry}

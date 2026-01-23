@@ -1,7 +1,8 @@
 import './BottomSheet.css';
 
-import { type ChangeEvent, type MouseEvent, useState } from 'react';
+import { type ChangeEvent, type MouseEvent } from 'react';
 
+import { useBottomSheetForm } from '../hooks/useBottomSheetForm';
 import type { MediaEntry, MediaType } from '../types/media';
 
 type Props = {
@@ -17,16 +18,17 @@ type Props = {
 const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
   const mediaTypes: MediaType[] = ['book', 'movie', 'series', 'game'];
 
-  const today = new Date().toISOString().slice(0, 10);
-
-  const [type, setType] = useState<MediaType>(entryToEdit?.type ?? 'movie');
-  const [name, setName] = useState(entryToEdit?.name ?? '');
-  const [time, setTime] = useState(
-    entryToEdit ? String(entryToEdit.durationMinutes) : ''
-  );
-  const [date, setDate] = useState(
-    entryToEdit ? entryToEdit?.createdAt?.slice(0, 10) : today
-  );
+  const {
+    type,
+    name,
+    time,
+    date,
+    setType,
+    setName,
+    setTime,
+    setDate,
+    isSaveDisabled,
+  } = useBottomSheetForm(entryToEdit);
 
   if (!isOpen) {
     return null;
@@ -39,13 +41,6 @@ const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
     );
 
     onClose();
-
-    if (!entryToEdit) {
-      setType('movie');
-      setName('');
-      setTime('');
-      setDate(today);
-    }
   };
 
   const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -70,12 +65,11 @@ const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
     setDate(event.target.value);
   };
 
-  const isSaveDisabled = name.trim() === '' || time === '' || Number(time) <= 0;
-
   return (
     <div className="overlay" onClick={handleOverlayClick}>
       <div className="bottomSheet">
-        <div className="bottomSheetHandle" />
+        <div className="bottomSheetHandle" onClick={onClose} />
+
         <div className="sheetTitle">
           {entryToEdit ? 'Edit Activity' : 'Add Activity'}
         </div>
