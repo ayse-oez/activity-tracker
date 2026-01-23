@@ -5,6 +5,7 @@
 }
 
 .mediaFilter button {
+  flex: 1;
   background-color: white;
   border: none;
   padding: 0 6px;
