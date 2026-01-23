@@ -19,6 +19,7 @@
   flex: 1;
   padding: var(--space-md);
   background: white;
-  padding-bottom: 56px;
-  /* padding for height of tabbar */
+  padding-bottom: 120px;
+  /* padding for height of tabbar 56px + on top 
+  to clear the add button*/
 }

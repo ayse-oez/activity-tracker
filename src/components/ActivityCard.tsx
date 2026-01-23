@@ -17,11 +17,12 @@ const ActivityCard = ({ entry, onEdit }: ActivityCardProps) => {
         <span className="duration">{durationMinutes} min</span>
       </div>
 
-      <div className="editButton" onClick={onEdit}>
-        Edit
+      <div className="entryBox">
+        <div className="activityTitle">{name}</div>
+        <div className="editButton" onClick={onEdit}>
+          Edit
+        </div>
       </div>
-
-      <div className="activityTitle">{name}</div>
     </div>
   );
 };
