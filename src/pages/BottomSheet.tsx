@@ -3,20 +3,28 @@ import './BottomSheet.css';
 import { type ChangeEvent, type MouseEvent } from 'react';
 
 import { useBottomSheetForm } from '../hooks/useBottomSheetForm';
+import type { BottomSheetFormData } from '../types/forms';
 import type { MediaEntry, MediaType } from '../types/media';
+import { MediaTypeLabels } from '../types/media';
+
+type BottomSheetMode = 'add' | 'edit';
 
 type Props = {
   isOpen: boolean;
+  mode: BottomSheetMode;
+  initialEntry?: MediaEntry | null;
   onClose: () => void;
-  onSave: (
-    entry: Omit<MediaEntry, 'id' | 'createdAt'> & { date?: string },
-    entryId?: string
-  ) => void;
-  entryToEdit?: MediaEntry | null;
+  onSave: (data: BottomSheetFormData) => void;
 };
 
-const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
-  const mediaTypes: MediaType[] = ['book', 'movie', 'series', 'game'];
+const BottomSheet = ({
+  isOpen,
+  mode,
+  initialEntry,
+  onClose,
+  onSave,
+}: Props) => {
+  const mediaTypes = Object.keys(MediaTypeLabels) as MediaType[];
 
   const {
     type,
@@ -28,17 +36,14 @@ const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
     setTime,
     setDate,
     isSaveDisabled,
-  } = useBottomSheetForm(entryToEdit);
+  } = useBottomSheetForm(initialEntry);
 
   if (!isOpen) {
     return null;
   }
 
   const handleSave = () => {
-    onSave(
-      { type, name, durationMinutes: Number(time), date },
-      entryToEdit?.id
-    );
+    onSave({ type, name, durationMinutes: Number(time), date });
 
     onClose();
   };
@@ -71,7 +76,7 @@ const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
         <div className="bottomSheetHandle" onClick={onClose} />
 
         <div className="sheetTitle">
-          {entryToEdit ? 'Edit Activity' : 'Add Activity'}
+          {mode === 'edit' ? 'Edit Activity' : 'Add Activity'}
         </div>
 
         <div className="bottomSheetContent">
@@ -80,7 +85,7 @@ const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
             <select value={type} onChange={handleTypeChange}>
               {mediaTypes.map((mediaType) => (
                 <option key={mediaType} value={mediaType}>
-                  {mediaType}
+                  {MediaTypeLabels[mediaType]}
                 </option>
               ))}
             </select>
@@ -108,7 +113,7 @@ const BottomSheet = ({ isOpen, onClose, onSave, entryToEdit }: Props) => {
             onClick={handleSave}
             disabled={isSaveDisabled}
           >
-            Save
+            {mode === 'edit' ? 'Update' : 'Save'}
           </button>
         </div>
       </div>

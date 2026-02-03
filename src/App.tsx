@@ -8,6 +8,7 @@ import { useEntries } from './hooks/useEntries';
 import BottomSheet from './pages/BottomSheet';
 import Home from './pages/Home';
 import Overview from './pages/Overview';
+import type { BottomSheetFormData } from './types/forms';
 import type { MediaEntry } from './types/media';
 
 type Tab = 'home' | 'overview';
@@ -18,17 +19,16 @@ const App = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [entryToEdit, setEntryToEdit] = useState<MediaEntry | null>(null);
 
-  const handleSaveEntry = (
-    entry: Omit<MediaEntry, 'id' | 'createdAt'> & { date?: string },
-    entryId?: string
-  ) => {
-    if (entryId) {
-      updateEntry(entryId, {
-        ...entry,
-        createdAt: entry.date ? new Date(entry.date).toISOString() : undefined,
+  const mode: 'add' | 'edit' = entryToEdit ? 'edit' : 'add';
+
+  const handleSaveEntry = (data: BottomSheetFormData) => {
+    if (entryToEdit) {
+      updateEntry(entryToEdit.id, {
+        ...data,
+        createdAt: data.date ? new Date(data.date).toISOString() : undefined,
       });
     } else {
-      addEntry(entry);
+      addEntry(data);
     }
 
     setEntryToEdit(null);
@@ -64,10 +64,11 @@ const App = () => {
       {isBottomSheetOpen && (
         <BottomSheet
           key={entryToEdit?.id ?? 'new'}
+          mode={mode}
           isOpen={isBottomSheetOpen}
           onClose={() => setIsBottomSheetOpen(false)}
           onSave={handleSaveEntry}
-          entryToEdit={entryToEdit}
+          initialEntry={entryToEdit}
         />
       )}
     </div>
