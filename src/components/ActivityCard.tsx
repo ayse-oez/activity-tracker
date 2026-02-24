@@ -1,6 +1,8 @@
 import './ActivityCard.css';
 
+import { mediaTrackingConfig } from '../config/mediaTrackingConfig';
 import { type MediaEntry, MediaTypeLabels } from '../types/media';
+import ProgressBar from './ProgressBar.tsx';
 
 type ActivityCardProps = {
   entry: MediaEntry;
@@ -8,13 +10,16 @@ type ActivityCardProps = {
 };
 
 const ActivityCard = ({ entry, onEdit }: ActivityCardProps) => {
-  const { type, name, durationMinutes } = entry;
+  const { type, name } = entry;
+  const config = mediaTrackingConfig[entry.type];
 
   return (
     <div className="activityCard">
       <div className="row">
         <span className="type">{MediaTypeLabels[type]}</span>
-        <span className="duration">{durationMinutes} min</span>
+        <span className="trackingUnit">
+          {entry.currentUnits} / {entry.totalUnits} {config.unitLabel}
+        </span>
       </div>
 
       <div className="entryBox">
@@ -23,6 +28,10 @@ const ActivityCard = ({ entry, onEdit }: ActivityCardProps) => {
           Edit
         </div>
       </div>
+
+      {config.supportsProgress && (
+        <ProgressBar current={entry.currentUnits} total={entry.totalUnits} />
+      )}
     </div>
   );
 };

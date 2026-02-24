@@ -11,6 +11,11 @@ export type MediaEntry = {
   id: string;
   type: MediaType;
   name: string;
-  durationMinutes: number;
+
+  // statt durationMinutes
+  totalUnits: number;
+  currentUnits: number;
+
+  durationMinutes?: number;
   createdAt: string;
 };
