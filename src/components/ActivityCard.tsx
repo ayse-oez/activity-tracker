@@ -18,7 +18,9 @@ const ActivityCard = ({ entry, onEdit }: ActivityCardProps) => {
       <div className="row">
         <span className="type">{MediaTypeLabels[type]}</span>
         <span className="trackingUnit">
-          {entry.currentUnits} / {entry.totalUnits} {config.unitLabel}
+          {type === 'book' || type === 'series'
+            ? `${entry.currentUnits} / ${entry.totalUnits} ${mediaTrackingConfig[type].unitLabel}`
+            : `${entry.totalUnits} ${mediaTrackingConfig[type].unitLabel}`}
         </span>
       </div>
 

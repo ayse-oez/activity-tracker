@@ -4,7 +4,7 @@ import { type ChangeEvent, type MouseEvent, useEffect, useState } from 'react';
 
 import { mediaTrackingConfig } from '../config/mediaTrackingConfig';
 import { useBottomSheetForm } from '../hooks/useBottomSheetForm';
-import { searchMovies } from '../services/tmdbService';
+import { getMovieDetails, searchMovies } from '../services/tmdbService';
 import type { BottomSheetFormData } from '../types/forms';
 import type { MediaEntry, MediaType } from '../types/media';
 import { MediaTypeLabels } from '../types/media';
@@ -114,9 +114,20 @@ const BottomSheet = ({
     setDate(event.target.value);
   };
 
-  const handleSelectMovie = (movie: MovieSearchResult) => {
-    setName(movie.title);
-    setShowSuggestions(false);
+  const handleSelectMovie = async (movie: MovieSearchResult) => {
+    try {
+      setName(movie.title);
+      setShowSuggestions(false);
+
+      const details = await getMovieDetails(movie.id);
+
+      if (details.runtime) {
+        setTotalUnits(details.runtime);
+        setCurrentUnits(details.runtime);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -184,12 +195,14 @@ const BottomSheet = ({
           ) : null}
 
           <label>
-            Total {mediaTrackingConfig[type].unitLabel}
+            {type === 'movie'
+              ? 'Duration (minutes)'
+              : `Total ${mediaTrackingConfig[type].unitLabel}`}
             <input
               type="number"
               value={totalUnits}
               onChange={handleTotalUnitsChange}
-            ></input>
+            />
           </label>
 
           <label>

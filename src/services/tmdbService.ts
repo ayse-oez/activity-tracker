@@ -1,5 +1,5 @@
 import type { MovieSearchResult } from '../types/movie';
-import type { TMDBMovie } from '../types/tmdb';
+import type { TMDBMovie, TMDBMovieDetails } from '../types/tmdb';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -29,4 +29,18 @@ export async function searchMovies(
   const data: { results: TMDBMovie[] } = await response.json();
 
   return data.results.map(mapMovie);
+}
+
+export async function getMovieDetails(movieId: number) {
+  const response = await fetch(
+    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch movie details');
+  }
+
+  const data: TMDBMovieDetails = await response.json();
+
+  return data;
 }

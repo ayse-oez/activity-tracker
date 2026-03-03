@@ -5,6 +5,11 @@ export interface TMDBMovie {
   poster_path: string | null;
 }
 
+export interface TMDBMovieDetails {
+  id: number;
+  runtime: number | null;
+}
+
 export interface TMDBSearchResponse {
   results: TMDBMovie[];
 }
