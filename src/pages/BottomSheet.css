@@ -98,3 +98,30 @@
   display: flex;
   justify-content: center;
 }
+
+.autocompleteWrapper {
+  position: relative;
+}
+
+.suggestionsDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.movieSuggestionItem {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.movieSuggestionItem:hover {
+  background-color: #f2f2f2;
+}

@@ -1,12 +1,14 @@
 import './BottomSheet.css';
 
-import { type ChangeEvent, type MouseEvent } from 'react';
+import { type ChangeEvent, type MouseEvent, useEffect, useState } from 'react';
 
 import { mediaTrackingConfig } from '../config/mediaTrackingConfig';
 import { useBottomSheetForm } from '../hooks/useBottomSheetForm';
+import { searchMovies } from '../services/tmdbService';
 import type { BottomSheetFormData } from '../types/forms';
 import type { MediaEntry, MediaType } from '../types/media';
 import { MediaTypeLabels } from '../types/media';
+import type { MovieSearchResult } from '../types/movie';
 
 type BottomSheetMode = 'add' | 'edit';
 
@@ -27,6 +29,10 @@ const BottomSheet = ({
 }: Props) => {
   const mediaTypes = Object.keys(MediaTypeLabels) as MediaType[];
 
+  const [movieResults, setMovieResults] = useState<MovieSearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
   const {
     type,
     name,
@@ -40,6 +46,27 @@ const BottomSheet = ({
     setDate,
     isSaveDisabled,
   } = useBottomSheetForm(initialEntry);
+
+  useEffect(() => {
+    if (type === 'movie' && name.length >= 3 && showSuggestions) {
+      const timeout = setTimeout(async () => {
+        try {
+          setIsSearching(true);
+          const results = await searchMovies(name);
+          setMovieResults(results.slice(0, 5));
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsSearching(false);
+        }
+      }, 400);
+
+      return () => clearTimeout(timeout);
+    }
+
+    // fallback wenn nicht movie oder zu kurz
+    setMovieResults([]);
+  }, [name, showSuggestions, type]);
 
   if (!isOpen) {
     return null;
@@ -70,6 +97,7 @@ const BottomSheet = ({
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
+    setShowSuggestions(true);
   };
 
   const handleTotalUnitsChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +112,11 @@ const BottomSheet = ({
 
   const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
+  };
+
+  const handleSelectMovie = (movie: MovieSearchResult) => {
+    setName(movie.title);
+    setShowSuggestions(false);
   };
 
   return (
@@ -109,7 +142,34 @@ const BottomSheet = ({
 
           <label>
             Name
-            <input type="text" value={name} onChange={handleNameChange} />
+            <div className="autocompleteWrapper">
+              <input
+                type="text"
+                value={name}
+                onChange={handleNameChange}
+                onBlur={() => {
+                  setTimeout(() => setShowSuggestions(false), 150);
+                }}
+              />
+
+              {type === 'movie' &&
+                showSuggestions &&
+                movieResults.length > 0 && (
+                  <div className="suggestionsDropdown">
+                    {isSearching && <div>Searching...</div>}
+
+                    {movieResults.map((movie) => (
+                      <div
+                        key={movie.id}
+                        className="movieSuggestionItem"
+                        onClick={() => handleSelectMovie(movie)}
+                      >
+                        {movie.title} ({movie.year})
+                      </div>
+                    ))}
+                  </div>
+                )}
+            </div>
           </label>
 
           {type === 'book' || type === 'series' ? (
